@@ -1,0 +1,30 @@
+<ion-view>
+	<div class="bar bar-header bar-positive">
+		<h1 class="title">Registro</h1>
+	</div>
+	<ion-content class="has-header has-headerbg">
+		<div class="row">
+			<div class="col">
+				<form ng-submit="signup(signupData)" name="myForm">
+					<div class="list list-inset">
+						<label class="item item-input">
+			    			<input type="text" ng-model="signupData.name" placeholder="Nombre" />
+			  			</label>
+		    			<label class="item item-input">
+			    			<input type="email" ng-model="signupData.email" placeholder="Email" />
+			  			</label>
+			  			<label class="item item-input">
+			    			<input type="password" ng-model="signupData.password" placeholder="Contraseña" />
+			  			</label>
+					</div>
+					<div class="col">
+						<button class="button button-block button-balanced" type="submit">Regístrate</button>
+					</div>
+					<div class="col">
+						<a class="button button-clear button-block btntext" href="#/login">Inicia sesión</a>
+					</div>
+				</form>
+			</div>
+		</div>     	
+	</ion-content>
+</ion-view>
