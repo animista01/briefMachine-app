@@ -1,26 +1,20 @@
-<ion-view title="Nuevo brief">
+<ion-view title="Nuevo" ng-controller="NewBriefCtrl">
   <ion-nav-buttons side="left">
     <button class="button button-icon icon ion-ios7-minus-outline" ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
-    <button class="button" ng-click="data.showDelete = false; data.showReorder = !data.showReorder">Reordenar</button>
+    <button class="button button-icon icon ion-arrow-move" ng-click="data.showDelete = false; data.showReorder = !data.showReorder"></button>
     <button class="button button-icon ion-more" ng-click="popover.show($event)"></button>
   </ion-nav-buttons>
   <ion-content class="has-header">
+      <p contenteditable>Lorem ipsum dolor</p>
     <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
       <ion-item ng-repeat="item in items" item="item">
-        Item {{ item.id }}
+        <div ng-bind-html="item.input">{{ item.input }}</div>
         <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
         </ion-delete-button>
-        <ion-option-button class="button-assertive" ng-click="edit(item)">
-          Edit
-        </ion-option-button>
-        <ion-option-button class="button-calm" ng-click="share(item)">
-          Share
-        </ion-option-button>
         <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
       </ion-item>
-
     </ion-list>
   </ion-content>
 </ion-view>

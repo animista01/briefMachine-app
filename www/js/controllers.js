@@ -54,70 +54,74 @@ angular.module('starter.controllers', [])
     { title: 'Rap', id: 5 },
     { title: 'Cowbell', id: 6 }
   ];
-
   $ionicPopover.fromTemplateUrl('templates/popover.html', function (popover) {
     $scope.popover = popover;
   });
-
-
 })
-.controller('NewBriefCtrl', function ($scope, $ionicPopover) {
+
+.controller('NewBriefCtrl', function ($scope, $ionicPopover, $rootScope, $sce) {
+  $rootScope.items = [];
   $scope.data = {
     showDelete: false
   };
-  $scope.moveItem = function(item, fromIndex, toIndex) {
+  $scope.moveItem = function (item, fromIndex, toIndex) {
     $scope.items.splice(fromIndex, 1);
     $scope.items.splice(toIndex, 0, item);
   };
-  $scope.onItemDelete = function(item) {
+  $scope.onItemDelete = function (item) {
     $scope.items.splice($scope.items.indexOf(item), 1);
   };
-  
-  $scope.items = [];
+
   $scope.addInput = function (type) {
-    switch(type){
+    switch (type){
       case 'nptTxt':
-        $scope.items.push({ 
-          
+        $rootScope.items.push({ 
+          input: $sce.trustAsHtml('<p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p> <input type="text" placeholder="An input text" disabled />')
         });
       break;
+      
       case 'textarea':
-        $scope.items.push({ 
-          
+        $rootScope.items.push({
+          input: $sce.trustAsHtml('<p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p><textarea placeholder="A textarea"></textarea>')         
         });
       break;
+      
       case 'nptColor':
-        $scope.items.push({ 
-          
+        $rootScope.items.push({
+          input: $sce.trustAsHtml('<p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p><input type="color" disabled />')         
         });
       break;
+      
       case 'nptDate':
-        $scope.items.push({ 
-          
+        $rootScope.items.push({
+          input: $sce.trustAsHtml('<p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p><input type="date" disabled />')         
         });
       break;
+      
       case 'nptNumber':
-        $scope.items.push({ 
-          
+        $rootScope.items.push({
+          input: $sce.trustAsHtml('<p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p><input type="tel" placeholder="An input number" disabled />')         
         });
       break;
+      
       case 'nptFile':
-        $scope.items.push({ 
-          
+        $rootScope.items.push({
+          input: $sce.trustAsHtml('<p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p> <input type="file" disabled />')         
         });
       break;
+      
       case 'nptRadio':
-        $scope.items.push({ 
-          
+        $rootScope.items.push({
+          input: $sce.trustAsHtml('<p contenteditable="true">Praesentium debitis pariatur quia odio reprehenderit voluptatum consequuntur</p><input type="radio" disabled /><input type="radio" disabled />')         
         });
       break;
+      
       case 'nptCheckbox':
-        $scope.items.push({ 
-          
+        $rootScope.items.push({
+          input: $sce.trustAsHtml('<p contenteditable="true">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p><input type="checkbox" disabled /><input type="checkbox" disabled />')         
         });
       break;
     }
-    console.log(type);
   }
 })
 
