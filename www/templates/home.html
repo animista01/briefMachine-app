@@ -1,4 +1,4 @@
-<ion-header-bar class="bar-light bar-subheader">
+<ion-header-bar align-title="left" class="bar-light bar-subheader">
   <ion-nav-buttons side="right">
     <a class="button button-icon ion-plus" href="#/app/newBrief"></a>
   </ion-nav-buttons>
@@ -11,15 +11,16 @@
     </button>
   </div>
 </ion-header-bar>
-<ion-view title="Mis brief">
+<ion-view title="Mis briefs">
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-content class="has-header has-subheader">
     <br>
     <ion-list>
-      <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
-        {{playlist.title}}
+      <ion-item ng-repeat="brief in briefs" href="#/app/playlists/{{brief.id}}">
+        {{brief.title}}
+        <ion-option-button class="button-assertive">Eliminar <i class="icon ion-trash-a"></i></ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>

@@ -69,8 +69,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     .state('app', {
       url: "/app",
       abstract: true,
-      templateUrl: "templates/menu.html",
-      controller: 'AppCtrl'
+      templateUrl: "templates/menu.html"
     })
 
     .state('app.home', {
@@ -88,13 +87,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       views: {
         'menuContent' :{
           templateUrl: "templates/new-brief.html",
-          controller: 'HomeCtrl'
+          controller: 'NewBriefCtrl'
         }
       }
     })
 
     .state('app.single', {
-      url: "/playlists/:playlistId",
+      url: "/brief/:briefId",
       views: {
         'menuContent' :{
           templateUrl: "templates/playlist.html",
@@ -102,7 +101,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/home');
-});
 
+  token = localStorage.getItem("token");
+  // if(token){
+    $urlRouterProvider.otherwise('/app/home');
+  // }else{
+    // $urlRouterProvider.otherwise('/login');
+  // }
+})
+.directive('dynamic', function ($compile) {
+  return {
+    restrict: 'A',
+    replace: true,
+    link: function (scope, ele, attrs) {
+      scope.$watch(attrs.dynamic, function (html) {
+        ele.html(html);
+        $compile(ele.contents())(scope);
+      });
+    }
+  };
+});

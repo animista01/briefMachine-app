@@ -1,8 +1,19 @@
 <ion-view>
-	<div class="bar bar-header bar-positive">
+	<ion-nav-bar class="bar-positive nav-title-slide-ios7">
+		<ion-nav-buttons side="left">
+	  		<a ng-click="goBack()" class="button button-icon ion-arrow-left-c"></a>
+		</ion-nav-buttons>
+
 		<h1 class="title">Registro</h1>
-	</div>
+    	<ion-nav-buttons side="right"></ion-nav-buttons>
+	</ion-nav-bar>
 	<ion-content class="has-header has-headerbg">
+		<div class="row">
+		  	<div class="col"></div>
+		  	<div class="col">
+		  		<a class="button button-clear button-block btntext" href="#/login">Inicia sesión</a>
+		  	</div>
+		</div>
 		<div class="row">
 			<div class="col">
 				<form ng-submit="signup(signupData)" name="myForm">
@@ -19,9 +30,6 @@
 					</div>
 					<div class="col">
 						<button class="button button-block button-balanced" type="submit">Regístrate</button>
-					</div>
-					<div class="col">
-						<a class="button button-clear button-block btntext" href="#/login">Inicia sesión</a>
 					</div>
 				</form>
 			</div>

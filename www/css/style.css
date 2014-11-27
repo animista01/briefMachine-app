@@ -1,1 +1,10 @@
-/* Empty. Add your own CSS if you like */
+p[contenteditable=true] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+textarea {
+	resize: none;
+}
