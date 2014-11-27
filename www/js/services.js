@@ -57,37 +57,35 @@ angular.module('starter.services', [])
 	      	$http({
 		        method: 'POST',
 		        url: 'http://briefmachine.com/api/briefs',
-		        transformRequest: function(obj) {
+		        transformRequest: function(obj){
 		          var str = [];
 		          for(var p in obj)
 		            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 		          return str.join("&");
 		        },
 		        data: xsrf
-	      	}).success(function (data) {
-		        // presume data contains json {token: some token}
+	      	}).success(function (data){
 		        defer.resolve(data);
 	      	}).error(function (err){
 		       defer.reject(err);
 	      	});      
 	      	return defer.promise;
 		},
-	    create: function (inputs){
+	    create: function (data){
     		var defer = $q.defer(); 
-	      	var xsrf = { email: email, password: password };
+	      	var xsrf = data;
 	      	$http({
 		        method: 'POST',
-		        url: 'https://savvy.land/api/user/signin',
-		        transformRequest: function(obj) {
+		        url: 'http://briefmachine.com/api/brief/new',
+		        transformRequest: function(obj){
 		          var str = [];
 		          for(var p in obj)
 		            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
 		          return str.join("&");
 		        },
 		        data: xsrf
-	      	}).success(function (data) {
-		        // presume data contains json {token: some token}
-		        defer.resolve(data);
+	      	}).success(function (res){
+		        defer.resolve(res);
 	      	}).error(function (err){
 	       		defer.reject(err);
 	     	});      

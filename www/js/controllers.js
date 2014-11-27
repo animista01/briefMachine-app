@@ -84,49 +84,49 @@ angular.module('starter.controllers', [])
     switch (type){
       case 'nptTxt':
         $rootScope.items.push({ 
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="type_3"> <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur</p> <input type="text" placeholder="An input text" disabled /> </div>')
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="3"> <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur</p> <input type="text" placeholder="An input text" disabled /> </div>')
         });
       break;
       
       case 'textarea':
         $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="type_4"> <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur</p> <textarea placeholder="A textarea" disabled></textarea> </div>')         
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="4"> <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur</p> <textarea placeholder="A textarea" disabled></textarea> </div>')         
         });
       break;
       
       case 'nptColor':
         $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="type_5"> <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur</p> <input type="color" disabled /> </div>')         
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="5"> <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur</p> <input type="color" disabled /> </div>')         
         });
       break;
       
       case 'nptDate':
         $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="type_6"> <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur</p> <input type="date" disabled /> </div>')         
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="6"> <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur</p> <input type="date" disabled /> </div>')         
         });
       break;
       
       case 'nptNumber':
         $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="type_7"> <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur</p> <input type="tel" placeholder="An input number" disabled /> </div>')         
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="7"> <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur</p> <input type="tel" placeholder="An input number" disabled /> </div>')         
         });
       break;
       
       case 'nptFile':
         $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="type_8"> <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur</p> <input type="file" disabled /> </div>')         
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="8"> <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur</p> <input type="file" disabled /> </div>')         
         });
       break;
       
       case 'nptRadio':
         $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="type_1"> <p contenteditable="true">Praesentium debitis pariatur quia odi</p> <input type="radio" disabled /><p contenteditable="true">Lorem ipsum</p> <input type="radio" disabled /> <p contenteditable="true">Lorem ipsum</p> <button class="button button-small ion-plus-round" ng-click="addMoreOpc(1, $event)"></button> </div>')         
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="1"> <p contenteditable="true">Praesentium debitis pariatur quia odi</p> </div> <div class="options"> <input type="radio" disabled /> <p contenteditable="true">Lorem ipsum</p> <input type="radio" disabled /> <p contenteditable="true">Lorem ipsum</p> </div> <button class="button button-small ion-plus-round" ng-click="addMoreOpc(1, $event)"></button>')         
         });
       break;
       
       case 'nptCheckbox':
         $rootScope.items.push({
-          input: $sce.trustAsHtml("<div id='inputN"+inputN+"' class='type_2'> <p contenteditable='true'>Lorem ipsum dolor sit amet, consectetur</p> <div class='option'> <input type='checkbox' disabled /> <p contenteditable='true'>Lorem ipsum</p> </div> <div class='option'> <input type='checkbox' disabled /><p contenteditable='true'>Lorem ipsum</p> </div> <button class='button button-small ion-plus-round' ng-click='addMoreOpc(2, $event)'></button> </div>")         
+          input: $sce.trustAsHtml("<div id='inputN"+inputN+"' class='2'> <p contenteditable='true'>Lorem ipsum dolor sit amet, consectetur</p> </div> <div class='options'> <input type='checkbox' disabled /> <p contenteditable='true'>Lorem ipsum</p> <input type='checkbox' disabled /> <p contenteditable='true'>Lorem ipsum</p> </div> <button class='button button-small ion-plus-round' ng-click='addMoreOpc(2, $event)'></button>")         
         });
       break;
     }
@@ -152,52 +152,55 @@ angular.module('starter.controllers', [])
   }
 
   $scope.save = function (){
-    question_type = [];
-    question_text = [];
+    data = { id: 1, title: "", email: "", description: "", questions: [] };
     $ionicPopup.show({
-      scope: $scope,
-      template: '<input type="text" placeholder="Titulo brief" ng-model="titulo" /> <br/> <textarea placeholder="Descripcion del brief" ng-model="description"></textarea> <br/> <input type="email" placeholder="Enviar a: Correo electrónico" ng-model="email" />',
+      template: '<input type="text" placeholder="Titulo brief" ng-model="data.titulo" /> <br/> <textarea placeholder="Descripcion del brief" ng-model="data.description"></textarea> <br/> <input type="email" placeholder="Enviar a: Correo electrónico" ng-model="data.correo" />',
       title: 'Guardar brief',
+      scope: $scope,
       buttons: [
         { text: 'Cancelar' },
         {
           text: '<b>Guardar</b>',
           type: 'button-positive',
-          onTap: function(e){
-            myArray = ['a', 'b', 'c', 'd']; 
-            delete myArray[2];
-            console.log(myArray)
-            var elements = document.getElementsByClassName("item-content")
-            // elements.remove(-2);
-            console.log(elements)
-            // for(var i = 0; i < elements.length; i++){
-            //   type = elements[i].firstElementChild.firstChild.className;
-            //   text = elements[i].firstElementChild.firstChild.innerText;
-            //   question_type.push(elements[i].firstElementChild.firstChild.className);
-            //   question_text.push(text);
-            //   // if(== "type_1"){
-
-            //   // }else if(== "type_2"){
-
-            //   // }
-            // }
-            // console.log(question_type)
-            // console.log(question_text)
-
-            // test = $rootScope.items[0].input.$$unwrapTrustedValue();
-            // console.log($rootScope.items)
-            // console.log($rootScope.items[0].input.$$unwrapTrustedValue());
+          onTap: function (e){
             if($rootScope.items.length == 0){
               e.preventDefault();
               $ionicLoading.show({template: '<p>Tu brief esta vació</p>', duration: 1500, showBackdrop: false});
             }else{
-              if($scope.titulo && $scope.description && $scope.email){
-                var result = BriefService.create();
-                result.then(function (data){
-                  if(data.status == 200){
-                    $ionicLoading.hide();
+              var elements = document.getElementsByClassName("item-content");
+              for(var i = 0; i < elements.length - 2; i++){
+                type = elements[i].firstElementChild.firstChild.className;
+                if(type === "1" || type === "2"){
+                  var opt = [];
+                  for(var j = 1; j < elements[i].children[0].children[1].children.length; j += 2){
+                    opt.push(elements[i].children[0].children[1].children[j].innerText);
+                  }
+                  data.questions.push({
+                    type: elements[i].firstElementChild.firstChild.className,
+                    question: elements[i].firstElementChild.firstChild.innerText.replace("\n\n", ""),
+                    options: opt
+                  });
+                }else{
+                  data.questions.push({
+                    type: elements[i].firstElementChild.firstChild.className,
+                    question: elements[i].firstElementChild.firstChild.innerText.replace("\n\n", ""),
+                  });
+                }
+              }//end for
+              data.questions = JSON.stringify(data.questions);
+              console.log($scope.data.titulo, $scope.data.description, $scope.data.correo)
+              if($scope.data.titulo && $scope.data.description && $scope.data.correo){
+                $ionicLoading.show({template:'<i class="icon ion-looping"></i><p>Creando brief</p>'});
+                data.title = $scope.data.titulo;
+                data.email = $scope.data.correo;
+                data.description = $scope.data.description;
+                console.log(data)
+                var result = BriefService.create(data);
+                result.then(function (res){
+                  if(res.status == 200){
+                    $ionicLoading.show({template: '<i class="icon ion-checkmark-round"></i><p>'+res.message+'</p>', showBackdrop: false, duration: 2500});
                   }else{
-                    $ionicLoading.show({template: '<i class="icon ion-close-round"></i><p>'+data.message+'</p>', duration: 2000, showBackdrop: false});
+                    $ionicLoading.show({template: '<i class="icon ion-close-round"></i><p>'+res.message+'</p>', duration: 2000, showBackdrop: false});
                   }
                 }, function (err){
                   $ionicLoading.show({template: '<p>Algo malo ocurrió</p>', duration: 1500, showBackdrop: false});
