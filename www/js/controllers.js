@@ -120,23 +120,36 @@ angular.module('starter.controllers', [])
       
       case 'nptRadio':
         $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="type_1"> <p contenteditable="true">Praesentium debitis pariatur quia odi</p> <input type="radio" disabled /><p contenteditable="true">Lorem ipsum</p> <input type="radio" disabled /> <p contenteditable="true">Lorem ipsum</p> <button class="button button-small ion-plus-round" ng-click="addMoreOpc(1, $event)"></button> </div>')         
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="type_1"> <p contenteditable="true">Praesentium debitis pariatur quia odi</p> <input type="radio" disabled /><p contenteditable="true">Lorem ipsum</p> <input type="radio" disabled /> <p contenteditable="true">Lorem ipsum</p> <button class="button button-small ion-plus-round" ng-click="addMoreOpc(1, $index, $event)"></button> </div>')         
         });
       break;
       
       case 'nptCheckbox':
         $rootScope.items.push({
-          input: $sce.trustAsHtml("<div id='inputN"+inputN+"' class='type_2'> <p contenteditable='true'>Lorem ipsum dolor sit amet, consectetur</p> <div class='option'> <input type='checkbox' disabled /> <p contenteditable='true'>Lorem ipsum</p> </div> <div class='option'> <input type='checkbox' disabled /><p contenteditable='true'>Lorem ipsum</p> </div> <button class='button button-small ion-plus-round' ng-click='addMoreOpc(2, $event)'></button> </div>")         
+          input: $sce.trustAsHtml("<div id='inputN"+inputN+"' class='type_2'> <p contenteditable='true'>Lorem ipsum dolor sit amet, consectetur</p> <div class='option'> <input type='checkbox' disabled /> <p contenteditable='true'>Lorem ipsum</p> </div> <div class='option'> <input type='checkbox' disabled /><p contenteditable='true'>Lorem ipsum</p> </div> <button class='button button-small ion-plus-round' ng-click='addMoreOpc(2, $index, $event)'></button> </div>")         
         });
       break;
     }
   }
-  $scope.addMoreOpc = function (type, obj){
-    e = obj.srcElement.parentElement.innerHTML;
-    ee = obj;
-    console.log(e)
-    console.log(ee)
-
+  $scope.addMoreOpc = function (type, index, obj){
+    // e = obj.srcElement.parentElement.innerHTML;
+    // ee = obj;
+    // console.log(e)
+    // console.log(ee)
+    var list = $rootScope.items[index].input.$$unwrapTrustedValue().split("<div class='option'>")
+    for ( var i = 1; i < list.length; i++){
+      list[i] = "<div class='option'>" + list[i]
+    }
+    var sublist = list[list.length-1].split("<button")
+    sublist[sublist.length - 1] = "<button" + sublist[sublist.length - 1]
+    if ( type == 2)
+      sublist.splice( sublist.length - 1, 0, "<div class='option'>  <input type='checkbox' disabled /> <p contenteditable='true'>Lorem ipsum</p> </div> ");
+    else
+      sublist.splice( sublist.length - 1, 0, "<div class='option'>  <input type='radio' disabled /> <p contenteditable='true'>Lorem ipsum</p> </div> ");
+    list[list.length - 1] = sublist.join("")
+    $rootScope.items[index] = {
+      input: $sce.trustAsHtml(list .join(""))
+    }
     // switch (type){
     //   case 1:
     //     $rootScope.items.push({ 
