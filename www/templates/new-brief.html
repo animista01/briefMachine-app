@@ -1,5 +1,5 @@
 <ion-view title="Nuevo brief" ng-controller="NewBriefCtrl">
-  <ion-nav-buttons side="right">
+  <ion-nav-buttons side="right" ng-if="items.length !== 0">
     <button class="button button-icon icon ion-ios7-minus-outline" ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
     <button class="button button-icon icon ion-arrow-move" ng-click="data.showDelete = false; data.showReorder = !data.showReorder"></button>
   </ion-nav-buttons>

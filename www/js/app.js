@@ -69,7 +69,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     .state('app', {
       url: "/app",
       abstract: true,
-      templateUrl: "templates/menu.html"
+      templateUrl: "templates/menu.html",
+      controller: 'HomeCtrl'
     })
 
     .state('app.home', {
@@ -96,18 +97,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: "/brief/:briefId",
       views: {
         'menuContent' :{
-          templateUrl: "templates/playlist.html",
-          controller: 'PlaylistCtrl'
+          templateUrl: "templates/brief.html",
+          controller: 'BriefCtrl'
         }
       }
     });
 
   token = localStorage.getItem("token");
-  // if(token){
+  if(token){
     $urlRouterProvider.otherwise('/app/home');
-  // }else{
-    // $urlRouterProvider.otherwise('/login');
-  // }
+  }else{
+    $urlRouterProvider.otherwise('/login');
+  }
 })
 .directive('dynamic', function ($compile) {
   return {

@@ -1,0 +1,18 @@
+<div class="modal">
+  <ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">Aprobar</h1>
+    <button class="button button-icon ion-chevron-down" ng-click="closeModal()"></button>
+  </ion-header-bar>
+  <ion-content class="has-header">
+    <div id="signature-pad" class="m-signature-pad">
+      <div class="m-signature-pad--body">
+        <canvas></canvas>
+      </div>
+      <div class="m-signature-pad--footer">
+        <div class="description">Tu firma</div>
+        <button class="button clear" ng-click="clear()">Limpiar</button>
+        <button class="button save" ng-click="save()">Ok</button>
+      </div>
+    </div>
+  </ion-content>
+</div>

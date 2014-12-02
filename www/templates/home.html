@@ -4,8 +4,8 @@
   </ion-nav-buttons>
   <div class="item item-input">
     <i class="icon ion-search placeholder-icon"></i>
-    <input type="search" placeholder="Buscar" ng-model="search" />
-    <button ng-if="search.length"
+    <input type="search" placeholder="Buscar" ng-model="data.searchQuery" />
+    <button ng-if="data.searchQuery"
       class="button button-icon ion-close-round input-button"
       ng-click="clearSearch()">
     </button>
@@ -18,9 +18,9 @@
   <ion-content class="has-header has-subheader">
     <br>
     <ion-list>
-      <ion-item ng-repeat="brief in briefs" href="#/app/playlists/{{brief.id}}">
+      <ion-item ng-repeat="brief in briefs | filter: data.searchQuery" href="#/app/brief/{{brief.id}}">
         {{brief.title}}
-        <ion-option-button class="button-assertive">Eliminar <i class="icon ion-trash-a"></i></ion-option-button>
+        <ion-option-button class="button-assertive" ng-click="deleteBrief(brief.id)">Eliminar <i class="icon ion-trash-a"></i></ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>

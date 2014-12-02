@@ -8,7 +8,7 @@ angular.module('starter.services', [])
 	      	var xsrf = { email: inputs.email, password: inputs.password };
 	      	$http({
 		        method: 'POST',
-		        url: 'https://savvy.land/api/user/login',
+		        url: 'http://briefmachine.com/api/user/login',
 		        transformRequest: function(obj){
 		          var str = [];
 		          for(var p in obj)
@@ -26,10 +26,10 @@ angular.module('starter.services', [])
 	    },
 	    signup: function (inputs){
 	    	var defer = $q.defer(); 
-	      	var xsrf = { email: email, password: password };
+	      	var xsrf = { first_name: inputs.name, last_name: inputs.last_name, email: inputs.email, password: inputs.password };
 	      	$http({
 		        method: 'POST',
-		        url: 'https://savvy.land/api/user/login',
+		        url: 'http://briefmachine.com/api/user/signup',
 		        transformRequest: function(obj){
 		          var str = [];
 		          for(var p in obj)
@@ -48,12 +48,13 @@ angular.module('starter.services', [])
 	}
 })
 
-.service('BriefService', function ($q, $http){
+.service('BriefService', function ($q, $http, $rootScope){
   	$http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
   	return {
 	    getAll: function (){
+  			token = localStorage.getItem("token");
 	    	var defer = $q.defer(); 
-	      	var xsrf = { id: 1 };
+	      	var xsrf = { id: token };
 	      	$http({
 		        method: 'POST',
 		        url: 'http://briefmachine.com/api/briefs',
@@ -65,6 +66,7 @@ angular.module('starter.services', [])
 		        },
 		        data: xsrf
 	      	}).success(function (data){
+	      		$rootScope.briefs = data.briefs;
 		        defer.resolve(data);
 	      	}).error(function (err){
 		       defer.reject(err);
@@ -89,6 +91,15 @@ angular.module('starter.services', [])
 	      	}).error(function (err){
 	       		defer.reject(err);
 	     	});      
+	      	return defer.promise;
+	    },
+	    findOne: function (briefId){
+	    	var defer = $q.defer();
+	      	for(var i = 0; i < $rootScope.briefs.length; i++){
+		        if($rootScope.briefs[i].id === parseInt(briefId)){
+		          defer.resolve($rootScope.briefs[i]);
+		        }
+	      	}
 	      	return defer.promise;
 	    }
   	}  
