@@ -181,7 +181,7 @@ angular.module('starter.controllers', [])
       
       case 'nptCheckbox':
         $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="2"> <p contenteditable="true">Praesentium debitis</p> </div> <div class="options"> <input type="checkbox" disabled /> <p contenteditable="true">Lorem</p> <input type="checkbox" disabled /> <p contenteditable="true">Lorem</p> </div> <button class="button button-small ion-plus-round" ng-click="addMoreOpc(1, $index, $event)"></button>')
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="2"> <p contenteditable="true">Praesentium debitis</p> </div> <div class="options"> <input type="checkbox" disabled /> <p contenteditable="true">Lorem</p> <input type="checkbox" disabled /> <p contenteditable="true">Lorem</p> </div> <button class="button button-small ion-plus-round" ng-click="addMoreOpc(2, $index, $event)"></button>')
         });
       break;
     }
