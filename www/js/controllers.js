@@ -132,6 +132,11 @@ angular.module('starter.controllers', [])
   };
   $scope.onItemDelete = function (item){
     $rootScope.items.splice($scope.items.indexOf(item), 1);
+    if($rootScope.items.length == 0){
+      $scope.data = {
+        showDelete: false
+      };
+    }
   };
 
   $scope.addInput = function (type){
