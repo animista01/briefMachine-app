@@ -45,6 +45,32 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });//ionicPlatform.ready
 })
 
+.constant('$ionicIconConfig',{
+  type: 'icon',
+  map: {
+    'ion-back': {
+      ios: 'ion-ios-arrow-back',
+      ipad: 'ion-ios-arrow-back',
+      android: 'ion-android-arrow-back'
+    },
+    'ion-close': {
+      ios: 'ion-ios-close-empty',
+      ipad: 'ion-ios-close-outline',
+      android: 'ion-android-close'
+    },
+    'ion-home': {
+      ios: 'ion-ios-home',
+      ipad: 'ion-ios-home-outline',
+      android: 'ion-android-home'
+    },
+    'ion-home': {
+      ios: 'ion-ios-more',
+      ipad: 'ion-ios-more-outline',
+      android: 'ion-android-more-vertical'
+    },
+  }
+})  
+
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
@@ -79,6 +105,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         'menuContent' :{
           templateUrl: "templates/home.html",
           controller: 'HomeCtrl'
+        }
+      }
+    })
+
+    .state('app.profile', {
+      url: "/profile",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/profile.html",
+          controller: 'ProfileCtrl'
         }
       }
     })

@@ -1,13 +1,13 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function ($scope, $ionicLoading, UserService, $state, $ionicViewService, $ionicPopup){
+.controller('LoginCtrl', function ($scope, $ionicLoading, UserService, $state, $ionicHistory, $ionicPopup){
   $scope.login = function (inputs){
     if(inputs.email && inputs.password){
       $ionicLoading.show({template:'<i class="icon ion-looping"></i>'});
       var result = UserService.login(inputs);
       result.then(function (data){
         if(data.status == 200){
-          $ionicViewService.nextViewOptions({
+          $ionicHistory.nextViewOptions({
             disableAnimate: true,
             disableBack: true
           });
@@ -37,9 +37,15 @@ angular.module('starter.controllers', [])
           text: '<b>Restablecer</b>',
           type: 'button-positive',
           onTap: function (e){
-            console.log($scope.cosa.correo)
             if($scope.cosa.correo){
-              // $ionicLoading.show({template:'<i class="icon ion-looping"></i>'});
+              // var rememberPass = LoginService.remember($scope.cosa.correo);
+              // rememberPass.then(function (res){
+              //   $scope.rememberPopup.close();
+              //   $ionicLoading.show({template: '<i class="icon ion-checkmark-round"></i><p>Te hemos enviado un correo.</p>', duration: 2000, showBackdrop: false});
+              // }, function (err){
+              //   $scope.rememberPopup.close();
+              //   $ionicLoading.show({template: '<p>Algo salió mal</p>', duration: 1500, showBackdrop: false});
+              // });
               e.preventDefault();
             }else{
               e.preventDefault();
@@ -69,15 +75,15 @@ angular.module('starter.controllers', [])
           $ionicLoading.show({template: '<i class="icon ion-close-round"></i><p>'+data.message+'</p>', duration: 2000, showBackdrop: false});
         }
       }, function (err){
-        $ionicLoading.show({template: '<p>Algo malo ocurrió</p>', duration: 1500, showBackdrop: false});
+        $ionicLoading.show({template: '<p>Algo salió mal</p>', duration: 1500, showBackdrop: false});
       });
     }else{
-      $ionicLoading.show({template: '<p>Necesitas llenar todos los campos</p>', duration: 2500, showBackdrop: false});
+      $ionicLoading.show({template: '<p>Necesitas llenar todos los campos</p>', duration: 1500, showBackdrop: false});
     }
   }
 })
 
-.controller('HomeCtrl', function ($scope, BriefService, $rootScope, $ionicLoading, $state, $ionicViewService){
+.controller('HomeCtrl', function ($scope, BriefService, $rootScope, $ionicLoading, $state, $ionicHistory){
   $ionicLoading.show({template:'<i class="icon ion-looping"></i><p>Trayendo tus briefs</p>'});
 
   var result = BriefService.getAll();
@@ -99,7 +105,7 @@ angular.module('starter.controllers', [])
 
   $scope.logout = function (){
     localStorage.removeItem('token');
-    $ionicViewService.nextViewOptions({
+    $ionicHistory.nextViewOptions({
       disableAnimate: true,
       disableBack: true
     });
@@ -108,13 +114,26 @@ angular.module('starter.controllers', [])
 
   $scope.deleteBrief = function (brief_id){
     console.log(brief_id)
+    // var result = BriefService.deleteBrief(brief_id);
+    // result.then(function (data){
+    //   if(data.status == 200){
+    //     $ionicLoading.hide();
+    //     $state.go('login');
+    //   }else{
+    //     $ionicLoading.show({template: '<i class="icon ion-close-round"></i><p>'+data.message+'</p>', duration: 2000, showBackdrop: false});
+    //   }
+    // }, function (err){
+    //   $ionicLoading.show({template: '<p>Algo salió mal</p>', duration: 1500, showBackdrop: false});
+    // });
   }
+})
 
+.controller('ProfileCtrl', function ($scope, UserService, $rootScope, $ionicLoading, $state, $ionicHistory){
 })
 
 .controller('NewBriefCtrl', function ($scope, $ionicPopover, $rootScope, $sce, $ionicPopup, $compile, BriefService, $ionicLoading){
   inputN = 0;
-  $rootScope.items = [];
+  $scope.items = [];
 
   $scope.data = {
     showDelete: false
@@ -127,12 +146,12 @@ angular.module('starter.controllers', [])
   });
 
   $scope.moveItem = function (item, fromIndex, toIndex){
-    $rootScope.items.splice(fromIndex, 1);
-    $rootScope.items.splice(toIndex, 0, item);
+    $scope.items.splice(fromIndex, 1);
+    $scope.items.splice(toIndex, 0, item);
   };
   $scope.onItemDelete = function (item){
-    $rootScope.items.splice($scope.items.indexOf(item), 1);
-    if($rootScope.items.length == 0){
+    $scope.items.splice($scope.items.indexOf(item), 1);
+    if($scope.items.length == 0){
       $scope.data = {
         showDelete: false
       };
@@ -143,56 +162,56 @@ angular.module('starter.controllers', [])
     inputN = inputN + 1;
     switch (type){
       case 'nptTxt':
-        $rootScope.items.push({ 
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="3"> <p contenteditable="true">Lorem ipsum dolor sit</p> <input type="text" placeholder="An input text" disabled /> </div>')
+        $scope.items.push({ 
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="3"> <p contenteditable="true">Lorem ipsum</p> <input type="text" placeholder="An input text" disabled /> </div>')
         });
       break;
       
       case 'textarea':
-        $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="4"> <p contenteditable="true">Lorem ipsum dolor sit</p> <textarea placeholder="A textarea" disabled></textarea> </div>')         
+        $scope.items.push({
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="4"> <p contenteditable="true">Lorem ipsum</p> <textarea placeholder="A textarea" disabled></textarea> </div>')         
         });
       break;
       
       case 'nptColor':
-        $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="5"> <p contenteditable="true">Lorem ipsum dolor sit</p> <input type="color" disabled /> </div>')         
+        $scope.items.push({
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="5"> <p contenteditable="true">Lorem ipsum</p> <input type="color" disabled /> </div>')         
         });
       break;
       
       case 'nptDate':
-        $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="6"> <p contenteditable="true">Lorem ipsum dolor sit</p> <input type="date" disabled /> </div>')         
+        $scope.items.push({
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="6"> <p contenteditable="true">Lorem ipsum</p> <input type="date" disabled /> </div>')         
         });
       break;
       
       case 'nptNumber':
-        $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="7"> <p contenteditable="true">Lorem ipsum dolor sit</p> <input type="tel" placeholder="An input number" disabled /> </div>')         
+        $scope.items.push({
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="7"> <p contenteditable="true">Lorem ipsum</p> <input type="tel" placeholder="An input number" disabled /> </div>')         
         });
       break;
       
       case 'nptFile':
-        $rootScope.items.push({
-          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="8"> <p contenteditable="true">Lorem ipsum dolor sit</p> <input type="file" disabled /> </div>')         
+        $scope.items.push({
+          input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="8"> <p contenteditable="true">Lorem ipsum</p> <input type="file" disabled /> </div>')         
         });
       break;
       
       case 'nptRadio':
-        $rootScope.items.push({
+        $scope.items.push({
           input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="1"> <p contenteditable="true">Praesentium debitis</p> </div> <div class="options"> <input type="radio" disabled /> <p contenteditable="true">Lorem</p> <input type="radio" disabled /> <p contenteditable="true">Lorem</p> </div> <button class="button button-small ion-plus-round" ng-click="addMoreOpc(1, $index, $event)"></button>')
         });
       break;
       
       case 'nptCheckbox':
-        $rootScope.items.push({
+        $scope.items.push({
           input: $sce.trustAsHtml('<div id="inputN'+inputN+'" class="2"> <p contenteditable="true">Praesentium debitis</p> </div> <div class="options"> <input type="checkbox" disabled /> <p contenteditable="true">Lorem</p> <input type="checkbox" disabled /> <p contenteditable="true">Lorem</p> </div> <button class="button button-small ion-plus-round" ng-click="addMoreOpc(2, $index, $event)"></button>')
         });
       break;
     }
   }
   $scope.addMoreOpc = function (type, index, obj){
-    var list = $rootScope.items[index].input.$$unwrapTrustedValue().split('<div class="options">');
+    var list = $scope.items[index].input.$$unwrapTrustedValue().split('<div class="options">');
     list[1] = '<div class="options">' + list[1];
     var sublist = list[1].split("</div> <button");
     sublist[1] = "</div> <button" + sublist[1];
@@ -202,7 +221,7 @@ angular.module('starter.controllers', [])
       sublist[0] = sublist[0] + " <input type='radio' disabled /> <p contenteditable='true'>Lorem</p> ";
     }
     list[1] = sublist.join("");
-    $rootScope.items[index] = {
+    $scope.items[index] = {
       input: $sce.trustAsHtml(list .join(""))
     };
   }
@@ -220,12 +239,12 @@ angular.module('starter.controllers', [])
           text: '<b>Guardar</b>',
           type: 'button-positive',
           onTap: function (e){
-            if($rootScope.items.length == 0){
+            if($scope.items.length == 0){
               e.preventDefault();
               $ionicLoading.show({template: '<p>Tu brief esta vació</p>', duration: 1500, showBackdrop: false});
             }else{
-              var elements = document.getElementsByClassName("item-content");
-              for(var i = 0; i < elements.length - 2; i++){
+              var elements = document.querySelectorAll("div.item-content");
+              for(var i = 0; i < elements.length; i++){
                 type = elements[i].firstElementChild.firstChild.className;
                 if(type === "1" || type === "2"){
                   var opt = [];
@@ -245,13 +264,11 @@ angular.module('starter.controllers', [])
                 }
               }//end for
               data.questions = JSON.stringify(data.questions);
-              console.log($scope.data.titulo, $scope.data.description, $scope.data.correo)
               if($scope.data.titulo && $scope.data.description && $scope.data.correo){
                 $ionicLoading.show({template:'<i class="icon ion-looping"></i><p>Creando brief</p>'});
                 data.title = $scope.data.titulo;
                 data.email = $scope.data.correo;
                 data.description = $scope.data.description;
-                console.log(data)
                 var result = BriefService.create(data);
                 result.then(function (res){
                   if(res.status == 200){
@@ -260,7 +277,7 @@ angular.module('starter.controllers', [])
                     $ionicLoading.show({template: '<i class="icon ion-close-round"></i><p>'+res.message+'</p>', duration: 2000, showBackdrop: false});
                   }
                 }, function (err){
-                  $ionicLoading.show({template: '<p>Algo malo ocurrió</p>', duration: 1500, showBackdrop: false});
+                  $ionicLoading.show({template: '<p>Algo salió mal</p>', duration: 1500, showBackdrop: false});
                 });
               }else{
                 e.preventDefault();
@@ -278,7 +295,7 @@ angular.module('starter.controllers', [])
   result.then(function (data){
     $scope.brief = data;
   }, function (err){
-    $ionicLoading.show({template: '<p>Algo malo ocurrió</p>', duration: 1500, showBackdrop: false});
+    $ionicLoading.show({template: '<p>Algo salió mal</p>', duration: 1500, showBackdrop: false});
   });
 
   $ionicModal.fromTemplateUrl('templates/sign-modal.html',{
@@ -317,7 +334,6 @@ angular.module('starter.controllers', [])
       }else{
         // $ionicLoading.show({template:'<i class="icon ion-looping"></i>'});
         console.log(signaturePad.toDataURL());
-        window.open(signaturePad.toDataURL());
       }
     }
   }

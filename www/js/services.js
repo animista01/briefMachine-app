@@ -24,6 +24,26 @@ angular.module('starter.services', [])
 	      	});      
 	      	return defer.promise;
 	    },
+	    remember: function (email){
+	      	var def = $q.defer(); 
+	      	var xsrf = { email: email };
+	      	$http({
+		        method: 'POST',
+		        url: 'https://www.thesavvyland.com/api/user/reset',
+		        transformRequest: function(obj) {
+		          var str = [];
+		          for(var p in obj)
+		            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		          return str.join("&");
+		        },
+		        data: xsrf
+	      	}).success(function (data){
+		        def.resolve(data);
+	      	}).error(function (err){
+		       def.reject(err);
+			});      
+	      	return def.promise;
+	    },
 	    signup: function (inputs){
 	    	var defer = $q.defer(); 
 	      	var xsrf = { first_name: inputs.name, last_name: inputs.last_name, email: inputs.email, password: inputs.password };
